@@ -39,12 +39,14 @@ var player = objects[0]
 
 function draw() {
     isColliding(player);
-    // if (isColliding(player) === true && movement === true) {dx = 0; dy = 0};
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    for (let node of nodes) {
-        ctx.fillRect(node.x+40, node.y+40, 10, 10)
-        ctx.fillStyle='rgb(255,100, 0)';
-        
+    // for (let node of nodes) {
+    //     ctx.fillRect(node.x+40, node.y+40, 10, 10)
+    //     ctx.fillStyle='rgb(255,100, 0)';
+    // }
+    for (let i=99; i < 110; i++) {
+        ctx.fillRect(nodes[i].x+40, nodes[i].y+40, 10, 10);
+        ctx.fillStyle='rgb(255, 0, 0)'
     }
     player.x += dx;
     player.y += dy;

@@ -48,11 +48,7 @@ class Player {
         this.height = height;
     }
     update() {
-        // this.x += dx;
-        // this.y += dy;
         if (isColliding(player)) {dx = 0; dy = 0}
-            // x += 5;
-
     }
     isColliding() {
         if (this.x /*+ this.image.width*/ > canvas.width || this.x < 0) {movement = false; return true;}
@@ -73,26 +69,6 @@ class Player {
     
         return false;
     }
-    // Boundary() {
-    //     if (this.x + this.image.width > canvas.width) {
-    //         this.x -= step;
-    //     }
-    //     if (this.x < 0) {
-    //         this.x += step;
-    //     }
-    //     if (this.y + this.image.height > canvas.height) {
-    //         this.y -= step;
-    //     }
-    //     if (this.y < 0) {
-    //         this.y += step;
-    //     }
-        
-        // for (var i of walls) {
-        //     if (this.x > i.x - i.width && this.x < i.x + i.width && this.y > i.y - i.height && this.y < i.y + i.height) {
-        //         step = step * -1;
-        //     } else { step = 4 };
-        // }
-    // }
 }
 
 function collideHandler() {
@@ -153,52 +129,3 @@ function processKey(e) {
 }
 
 window.addEventListener("keydown", function (e) { processKey(e); });
-
-// function keyPressed(e) {
-//     switch(e.which) {
-//         case 65:
-//             objects[0].x -= step;
-//             // objects[0].Boundary();
-//             objects[0].isColliding();
-//             if (objects[0].isColliding){
-//                 objects[0].x += step;
-//             };
-//             break;
-//         case 68:
-//             objects[0].x += step;
-//             // objects[0].Boundary();
-//             objects[0].isColliding();
-//             if (objects[0].isColliding){
-//                 objects[0].x -= step;
-//             };
-//             break;
-//         case 87:
-//             objects[0].y -= step;
-//             // objects[0].Boundary();
-//             objects[0].isColliding();
-//             if (objects[0].isColliding){
-//                 objects[0].y += step;
-//             };
-//             break;
-//         case 83:
-//             objects[0].y += step;
-//             // objects[0].Boundary();
-//             objects[0].isColliding();
-//             if (objects[0].isColliding){
-//                 objects[0].y -= step;
-//             };
-//             break;
-//         case 37: // Right
-//             playerPosX -= 4;
-//             break;
-//         case 39: // Left
-//             playerPosX += 4;
-//             break;
-//         case 38: // Up
-//             playerPosY -= 4;
-//             break;
-//         case 40: // Down
-//             playerPosY += 1;
-//             break;
-//     }
-// }
