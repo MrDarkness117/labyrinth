@@ -288,5 +288,5 @@ function checkPos() {
     if (px === nodes[115].x && py === nodes[115].y) {allowUpRt()};
     if (px === nodes[116].x && py === nodes[116].y) {allowDnLt()};
     if (px === nodes[117].x && py === nodes[117].y) {allowUpDn()};
-    if (px === nodes[118].x && py === nodes[118].y) {allowUpLtRt()};
+    if (px === nodes[118].x && py === nodes[118].y) {allowUpLt()};
 }

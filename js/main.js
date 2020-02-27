@@ -8,6 +8,8 @@ ctx = canvas.getContext("2d");
 canvas.width = 1151;
 canvas.height = 1200;
 
+// ctx.scale(0.85, 0.85)
+
 var xCenter = canvas.width/2;
 var yCenter = canvas.height/2;
 
@@ -17,13 +19,16 @@ var scaleNote1 = 0.03;
 var scaleNote2 = 0.5;
 var scaleNote3 = 0.2;
 var scaleNote4 = 0.1;
-// var step = 4;
+var scaleF = 0.2;
 
 let dx = 0;
 let dy = 0;
 let retrX = 0;
 let retrY = 0;
 let movement = false;
+
+let finished = false;
+let drawGif = false;
 
 // Blocks for movement through nodes
 
@@ -54,25 +59,37 @@ class Player {
         if (isColliding(player)) {dx = 0; dy = 0}
     }
     isColliding() {
-        if (this.x /*+ this.image.width*/ > canvas.width || this.x < 0) {movement = false; return true;}
-        if (this.y /*+ this.image.height*/ > canvas.height || this.y < 0) {movement = false; return true;}
+        if (this.x > canvas.width || this.x < 0) {movement = false; return true;}
+        if (this.y > canvas.height || this.y < 0) {movement = false; return true;}
     
-        // for (const wall of walls) {
-        //   const isInXRange = this.x > wall.x && this.x < this.x < wall.x + wall.width;
-        //   const isInYRange = this.y > wall.y && this.y < this.y < wall.y + wall.height;
-    
-        //   if (isInXRange && isInYRange) return true;
         for (const node of nodes) {
             if (this.x == node.x && this.y == node.y) {
                 movement = false;
                 return true;
             }
         }
-        // }
     
         return false;
     }
 }
+
+class Note {
+    constructor (image, sound, x, y, width, height, collided=false) {
+        this.x = x;
+        this.y = y;
+
+        this.width = 30;
+        this.height = 30;
+
+        this.image = new Image();
+        this.image.src = image;
+
+        this.sound = sound;
+    }
+}
+
+class Finish extends Note {};
+
 
 // The handler that makes the player stop + controls their location
 
@@ -97,8 +114,9 @@ function isColliding(el) {
         let isInYRange = el.y + 40 > note.y && el.y + 40 < note.y + 30;
 
         if (isInXRange && isInYRange) {
-            note.x = canvas.width + 30;
-        
+            note.x += canvas.width;
+            note.collided = true;
+
             let audio = new Audio(note.sound);
             audio.play();
         }
@@ -109,8 +127,9 @@ function isColliding(el) {
         let isInYRange = el.y + 40 > note.y && el.y + 40 < note.y + 50;
         
         if (isInXRange && isInYRange) {
-            note.x = canvas.width + 30;
-            
+            note.x += canvas.width;
+            note.collided = true;
+
             let audio = new Audio(note.sound);
             audio.play();
         }
@@ -121,8 +140,9 @@ function isColliding(el) {
         let isInYRange = el.y + 40 > note.y+10 && el.y + 40 < note.y + 75;
         
         if (isInXRange && isInYRange) {
-            note.x = canvas.width + 30
-            
+            note.x += canvas.width;
+            note.collided = true;
+
             let audio = new Audio(note.sound);
             audio.play();
         };
@@ -133,12 +153,17 @@ function isColliding(el) {
         let isInYRange = el.y + 40 > note.y-10 && el.y + 40 < note.y + 30;
 
         if (isInXRange && isInYRange) {
-            note.x = canvas.width + 30;
-    
+            note.x += canvas.width;
+            note.collided = true;
+            
             let audio = new Audio(note.sound);
             audio.play();
         }
     }
+
+    // Finish condition
+
+    if (el.x + 40 > finish.x + 30 && el.x + 40 < finish.x + 60 && el.y + 40 > finish.y+40 && el.y + 40 < finish.y + 90) {console.log('end');endGame()};
 
     // Condition that calls the collideHandler() - stop the player movement when colliding
 
@@ -151,19 +176,28 @@ function isColliding(el) {
     return false;
 }
 
-class Note {
-    constructor (image, sound, x, y, width, height) {
-        this.x = x;
-        this.y = y;
+// Functions for finish condition
 
-        this.width = 30;
-        this.height = 30;
-
-        this.image = new Image();
-        this.image.src = image;
-
-        this.sound = sound;
+function endGame() {
+    drawGif = true;
+    movement = true;
+    finished = true;
+    for (const notes of [notes1, notes2, notes3, notes4]) {
+        for (const note of notes) {
+            if (note.collided === true) {
+                note.x -= canvas.width;
+                note.collided = false;
+            }
+        }
     }
+}
+
+function restart() {
+    drawGif = false;
+    movement = false;
+    allowAll();
+    player.x = 530;
+    player.y = 570;
 }
 
 // Functions for movement
@@ -185,3 +219,4 @@ function processKey(e) {
 }
 
 window.addEventListener("keydown", function (e) { processKey(e); });
+window.addEventListener('click', () => { if (finished) restart(); finished=false })

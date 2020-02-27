@@ -7,7 +7,7 @@ canvas {
     position: absolute;
     background: url('../assets/img/labyrinth_minotaur.png') no-repeat;
     background-size: contain;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.85);
     width: 920px;
     height: 960px;
     left: 50%;
@@ -20,40 +20,23 @@ body {
 
 .container {
     align-items: center;
-    /* margin: 0 auto; */
 }
 
 .maze {
     position: absolute;
     background-color: tan;
-    /* background-image: url('../assets/img/labyrinth_minotaur.png'); */
     background-repeat: no-repeat;
     background-size: cover;
     width: 1151px;
     height: 1200px;
     top: 50%;
     left: 50%;
-    /* transform: scale(0.5); */
     transform: translate(-50%, -50%) scale(0.85);
 }
 
-/* .player {
+.restart-text {
+    display: none;
     position: absolute;
-    overflow: hidden;
-    top: 47%;
-    left: 46%;
-    width: 70px;
-    height: 70px;
-    background-color: hotpink;
-    border-radius: 50%;
-} */
-
-.wall {
-    position: absolute;
-    background: rgba(10, 255, 20, 0.5);
-}
-
-/* Just for reference, this is an empty class for collisions */
-.collision-state {
-
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
 }
